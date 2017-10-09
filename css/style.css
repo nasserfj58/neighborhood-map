@@ -1,0 +1,12 @@
+body{
+  margin-top: 20px;
+  padding: 0;
+}
+#map {
+        height: 400px;
+        width: :100%;
+        margin: auto;
+       }
+.places_list{
+  width: 100%;
+}

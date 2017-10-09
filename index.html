@@ -8,11 +8,47 @@
 <meta name="author" content="Nasser Aljuraysi">
 <title>Neighborhood Map
 </title>
-
+<link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
+
 </head>
 <body>
+  <div class="container">
+    <div class="row">
+    <div id="map" class="col-md-6">
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-12 ">
+          <label>Enter Location</label>
+          <!-- <input type="text" data-bind="textInput: location, valueUpdate: 'keypress', event: { keypress: changeList }" class="form-control" placeholder="enter location"> -->
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 list-group">
+          <a href="#" class="list-group-item active">
+            Cras justo odio
+          </a>
+          <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+          <a href="#" class="list-group-item">Morbi leo risus</a>
+          <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+          <a href="#" class="list-group-item">Vestibulum at eros</a>
+        </div>
+      </div>
+     </div>
+    </div>
+    <div>
+      <script src="js/lib/knockout-3.4.2.js" type="text/javascript"></script>    
+  <script src="js/lib/jquery.min.js"></script>
+  <script src="js/lib/bootstrap.min.js"></script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2wLLK3vcEY1gdSsAvq2uRK6R-ANAEpUQ&callback=initMap">
+  </script>
+  <script src="js/app.js" type="text/javascript"></script>
 
-  <script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.4.2.js" type="text/js"/>
+
+
+
+<!--&callback=ko.map.render()-->
 </body>
 </html>
