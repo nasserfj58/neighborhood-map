@@ -63,9 +63,8 @@ ViewModel=function() {
   self.changeList = function(){
     if(self.filterInput()){
     self.locations().forEach(function(item){
-      if(item.name.includes(self.filterInput())){
+      if((item.name).toLocaleLowerCase().includes(self.filterInput().toLocaleLowerCase())){
         item.show(true);
-        console.log(item.show());
       }
       else {
           item.show(false);
