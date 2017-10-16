@@ -8,15 +8,15 @@ var locations = [
   new Location("Masmak Fort",24.631215,46.713380)
 ];
 
-var markers=new Array();
-var infowindows=new Array();
+var markers = new Array();
+var infowindows = new Array();
 var map;
 
 //Set All locations info from foursquare api at the begning
 for(var i = 0; i<locations.length; i++){
   getLoactionInfo(locations[i].lat,locations[i].lng);
 }
-
+//this function is calledback when googlemaps is downloaded
 function initMap() {
         // Create a map object and specify the DOM element for display
         var map = new google.maps.Map(document.getElementById('map'), {
@@ -54,32 +54,28 @@ function initMap() {
            infowindow.open(map, element);
           });
     });
-
   }
-
 
 ViewModel=function() {
   var self = this;
   self.filterInput = ko.observable();
   self.locations = ko.observable(locations);
   self.changeList = function(){
-    if(self.filterInput())
-    self.locations.forEach(function(item){
-      if(!item.name.includes(self.filterInput())){
-        item.show(false);
+    if(self.filterInput()){
+    self.locations().forEach(function(item){
+      if(item.name.includes(self.filterInput())){
+        item.show(true);
+        console.log(item.show());
       }
       else {
-          item.show(true);
+          item.show(false);
       }
     });
-
+    }
   };
-
 }
 
-
 ko.applyBindings(new ViewModel());
-
 
 // Create Location object by call new location(name,lat,lng);
  function Location(name,lat,lng){
@@ -156,7 +152,7 @@ ko.applyBindings(new ViewModel());
           //  info+="<li>Address: "+address.toString()+"</li></ul>";
     }
     else {
-      info = "Cannot retrive the data";
+      info = "Cannot Retrive the data";
     }
     locations[index].info=info;
     infowindows[index].setContent(locations[index].info);
