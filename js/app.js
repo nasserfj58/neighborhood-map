@@ -1,8 +1,6 @@
-//hardcoded locations which contain Latitude and Longitude for my fafuorite locations in Ryiadh
-var markers=new Array();
-var infowindows=new Array();
-var map;
-var locations =[
+
+//hardcoded locations data
+var locations = [
   new Location("King Saud University",24.716241,46.619108),
   new Location("King Fahad Library",24.685628,46.686504),
   new Location("Alhilal Football Club",24.605674,46.624572),
@@ -10,20 +8,13 @@ var locations =[
   new Location("Masmak Fort",24.631215,46.713380)
 ];
 
+var markers=new Array();
+var infowindows=new Array();
+var map;
+
 //Set All locations info from foursquare api at the begning
-for(var i=0; i<locations.length; i++){
+for(var i = 0; i<locations.length; i++){
   getLoactionInfo(locations[i].lat,locations[i].lng);
-}
-
-// Create Location object by call new location(name,lat,lng);
- function Location(name,lat,lng){
-      var self=this;
-
-      self.name= name;
-      self.lat = lat;
-      self.lng = lng;
-      self.show= ko.observable(true);
-      self.info="";
 }
 
 function initMap() {
@@ -58,48 +49,48 @@ function initMap() {
             });
             disapleInmation();
             element.setAnimation(google.maps.Animation.BOUNCE);
-            if(infowindow.getContent === "Cannot retrive the data")
-              getLoactionInfo(element.position.lat,element.position.lng);
+            //if(infowindow.getContent === "Cannot retrive the data")
+              getLoactionInfo(element.getPosition().lat(),element.getPosition().lng());
            infowindow.open(map, element);
           });
     });
 
   }
-//
-//  Marker = function(lat,lng,map){
-//    new google.maps.Marker({
-//           position: {lat, lng},
-//           map: map
-//         });
-// }
-// infowindow=function(info){
-//
-//   var infowindow = new google.maps.InfoWindow({
-//       content: info
-//     });
-//
-// }
+
 
 ViewModel=function() {
   var self = this;
-  //this.map = ko.observable(new map(-25.363,131.044));
-  self.locations=locations;
-  //self.autoLocationComplete=
+  self.filterInput = ko.observable();
+  self.locations = ko.observable(locations);
+  self.changeList = function(){
+    if(self.filterInput())
+    self.locations.forEach(function(item){
+      if(!item.name.includes(self.filterInput())){
+        item.show(false);
+      }
+      else {
+          item.show(true);
+      }
+    });
 
-  this.setNewMarker = function(){
+  };
 
- };
- this.render = function(vm) {
-      ko.applyBindings(vm);
-       //Here is my logic now
-
-  //  self.map.render();
-
-
-};
 }
 
+
 ko.applyBindings(new ViewModel());
+
+
+// Create Location object by call new location(name,lat,lng);
+ function Location(name,lat,lng){
+      var self=this;
+
+      self.name= name;
+      self.lat = lat;
+      self.lng = lng;
+      self.show= ko.observable(true);
+      self.info="";
+}
 
 // check lat and return index
   function getLocationIndex(lat){

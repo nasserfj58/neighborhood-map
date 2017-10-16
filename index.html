@@ -10,8 +10,8 @@
 </title>
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
-
 </head>
+
 <body>
   <div class="container">
     <div class="row">
@@ -21,12 +21,12 @@
       <div class="row">
         <div class="col-md-12 ">
           <label>Enter Location</label>
-          <!-- <input type="text" data-bind="textInput: location, valueUpdate: 'keypress', event: { keypress: changeList }" class="form-control" placeholder="enter location"> -->
+          <input type="text" data-bind="textInput: filterInput, event:{ change: changeList}" class="form-control" />
         </div>
       </div>
       <div class="row">
         <div data-bind="foreach: locations" class="col-md-12 list-group">
-          <a data-bind="text: name" href="#" class="list-group-item">
+          <a data-bind="text: name,visible: show" href="#" class="list-group-item">
           </a>
         </div>
       </div>
