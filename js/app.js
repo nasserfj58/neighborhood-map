@@ -7,19 +7,16 @@ var locations = [
   new Location("King Khalid International Airport",24.959439,46.702620),
   new Location("Masmak Fort",24.631215,46.713380)
 ];
-
+var wanteLocationsLat = new Array();
+var wantedMarkers = new Array();
 var markers = new Array();
 var infowindows = new Array();
 var map;
 
-//Set All locations info from foursquare api at the begning
-for(var i = 0; i<locations.length; i++){
-  getLoactionInfo(locations[i].lat,locations[i].lng);
-}
 //this function is calledback when googlemaps is downloaded
 function initMap() {
         // Create a map object and specify the DOM element for display
-        var map = new google.maps.Map(document.getElementById('map'), {
+          map = new google.maps.Map(document.getElementById('map'), {
           zoom: 9,
           center: {lat: 24.713552, lng: 46.675296}
         });
@@ -60,17 +57,21 @@ ViewModel=function() {
   var self = this;
   self.filterInput = ko.observable();
   self.locations = ko.observable(locations);
+  //self.wanteLocationsLat = wanteLocationsLat;
   self.changeList = function(){
     if(self.filterInput()){
     self.locations().forEach(function(item){
       if((item.name).toLocaleLowerCase().includes(self.filterInput().toLocaleLowerCase())){
         item.show(true);
+        wantedMarkers.push(getMarker(item.lat));
       }
       else {
           item.show(false);
       }
     });
+      setWantedMarkers();
     }
+
   };
 }
 
@@ -128,8 +129,6 @@ ko.applyBindings(new ViewModel());
       })
       .fail(function() {
         FormatInfo(lat,"Error");
-        console.log("Cannot retrive the data");
-        //info= "Cannot retrive the data ";
   });
   }
 
@@ -151,8 +150,29 @@ ko.applyBindings(new ViewModel());
           //  info+="<li>Address: "+address.toString()+"</li></ul>";
     }
     else {
-      info = "Cannot Retrive the data";
+      info = "<b>Cannot Retrive The Data</b>";
     }
     locations[index].info=info;
     infowindows[index].setContent(locations[index].info);
   }
+  // Sets the map on all markers but the wanted one
+  function setWantedMarkers() {
+
+        for (var i = 0; i < markers.length; i++) {
+          //hide all mrakers from the map
+          markers[i].setMap(null);
+        }
+        wantedMarkers.forEach(function(item){
+        //show the wanted markers in the map
+          item.setMap(map);
+        });
+        //empty the wantedMarkers array, for the next filtering
+        wantedMarkers.length=0;
+   }
+
+   function getMarker(lat){
+        for (var i = 0; i < markers.length; i++) {
+             if(markers[i].getPosition().lat()=== lat)
+                return markers[i];
+          }
+   }
