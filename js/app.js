@@ -7,7 +7,7 @@ var locations = [
   new Location("King Khalid International Airport",24.959439,46.702620),
   new Location("Masmak Fort",24.631215,46.713380)
 ];
-var wanteLocationsLat = new Array();
+
 var wantedMarkers = new Array();
 var markers = new Array();
 var infowindows = new Array();
@@ -57,11 +57,13 @@ ViewModel=function() {
   var self = this;
   self.filterInput = ko.observable();
   self.locations = ko.observable(locations);
-  //self.wanteLocationsLat = wanteLocationsLat;
+  self.changeMarkers=function(location){
+    //this will triger the click event on the marker without clicken it
+      new google.maps.event.trigger( getMarker(location.lat), 'click' );
+  };
   self.changeList = function(){
-    if(self.filterInput()){
-    self.locations().forEach(function(item){
-      if((item.name).toLocaleLowerCase().includes(self.filterInput().toLocaleLowerCase())){
+       self.locations().forEach(function(item){
+      if((item.name.toLocaleLowerCase().includes(self.filterInput().toLocaleLowerCase()))||(self.filterInput()==="")){
         item.show(true);
         wantedMarkers.push(getMarker(item.lat));
       }
@@ -69,9 +71,7 @@ ViewModel=function() {
           item.show(false);
       }
     });
-      setWantedMarkers();
-    }
-
+    setWantedMarkers();
   };
 }
 
@@ -123,10 +123,11 @@ ko.applyBindings(new ViewModel());
     $.getJSON( url, {
         format: "json"
     })
-      //if sucsses request happen return info object
+      //if sucsses request happen set object info
       .done(function( data ) {
           FormatInfo(lat,data);
       })
+      //if fail request happen set object info to "Cannot retrive"
       .fail(function() {
         FormatInfo(lat,"Error");
   });
@@ -142,12 +143,11 @@ ko.applyBindings(new ViewModel());
       var name = (data.response.venues[0].name);
       var city = (data.response.venues[0].location.city);
       var category = (data.response.venues[0].categories[0].name);
-     // var address = (data.response.venues[0].location.address).toString();
+
       var info = "<ul><li><strong>";
           info += "Name: "+locations[index].name+"</b></li>";
           info += "<li>City: "+city+"</li>";
           info += "<li>Category: "+category+"</li><ul>";
-          //  info+="<li>Address: "+address.toString()+"</li></ul>";
     }
     else {
       info = "<b>Cannot Retrive The Data</b>";
@@ -172,7 +172,7 @@ ko.applyBindings(new ViewModel());
 
    function getMarker(lat){
         for (var i = 0; i < markers.length; i++) {
-             if(markers[i].getPosition().lat()=== lat)
+             if(markers[i].getPosition().lat() === lat)
                 return markers[i];
           }
    }
