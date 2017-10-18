@@ -36,9 +36,15 @@ function initMap() {
         }(marker);
 
           markers.forEach(function(element) {
-          var infowindow = new google.maps.InfoWindow({
+            var infowindow = new google.maps.InfoWindow({
             content:""
             });
+            google.maps.event.addListener(infowindow,'closeclick',function(){
+              disapleInmation();
+            //removes the marker
+          // then, remove the infowindows name from the array
+            });
+
             infowindows.push(infowindow);
             element.addListener('click', function() {
             infowindows.forEach(function(item){

@@ -10,3 +10,8 @@ body{
 .places_list{
   width: 100%;
 }
+
+#burger-button{
+  margin: 0;
+  padding: 0;
+}
