@@ -1,3 +1,10 @@
+$(document).ready(function(){
+//handle google maps Error
+function handleError(msg){
+  var mapdiv = $('#map');
+  mapdiv.text(msg);
+  //mapdiv.append('<div style=" margin:50px" class="alert alert-danger" role="alert"><strong>We are sorry!</strong> There is an Error with google map, Try Again Later.</div>');
+}
 
 //hardcoded locations data
 var locations = [
@@ -20,16 +27,9 @@ function initMap() {
           zoom: 9,
           center: {lat: 24.713552, lng: 46.675296}
         });
-        
-        //this check if google map write errors to the console
-        if(window.console.count.length>0){
-          handleError();
-          return;
-        }
 
         var marker;
         for (var i = 0; i < locations.length; i++) {
-
               var lat= locations[i].lat;
               var lng= locations[i].lng;
               var info=locations[i].info;
@@ -59,12 +59,18 @@ function initMap() {
             });
             disapleInmation();
             element.setAnimation(google.maps.Animation.BOUNCE);
-            //if(infowindow.getContent === "Cannot retrive the data")
-              getLoactionInfo(element.getPosition().lat(),element.getPosition().lng());
+                          getLoactionInfo(element.getPosition().lat(),element.getPosition().lng());
            infowindow.open(map, element);
           });
     });
+
   }
+  mapError = () => {
+    console.log("what ever");
+    var mapdiv = $('#map');
+    mapdiv.text("you cant");
+    mapdiv.append('<div style=" margin:50px" class="alert alert-danger" role="alert"><strong>We are sorry!</strong> There is an Error with google map, Try Again Later.</div>');
+  };
 
 ViewModel=function() {
   var self = this;
@@ -191,9 +197,14 @@ ko.applyBindings(new ViewModel());
                 return markers[i];
           }
    }
-   //handle google maps Error
-   function handleError(){
-     var mapdiv = $('#map');
-     mapdiv.text("");
-     mapdiv.append('<div style=" margin:50px" class="alert alert-danger" role="alert"><strong>We are sorry!</strong> There is an Error with google map, Try Again Later.</div>');
-   }
+   $.getScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyD2wLLK3vcEY1gdSsAvq2uRK6R-ANAEpU")
+     .done(function( script, textStatus ) {
+       initMap();
+     })
+     .fail(function( jqxhr, settings, exception ) {
+       console.log("not");
+   })
+   .always(function() {
+
+});
+});

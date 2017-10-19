@@ -17,9 +17,9 @@
   <div id="wrapper">
     <!-- Sidebar -->
     <div id="sidebar-wrapper">
-        <ul class="sidebar-nav">
             <li class="sidebar-brand">
                   <span style="color:white" >Filter Locations</span>
+                  <ul class="sidebar-nav">
               </li>
               <li>
                   <input type="text" data-bind="textInput: filterInput, event:{ change: changeList}" class="form-control" />
@@ -39,20 +39,20 @@
                 </div>
             </div>
       </div>
-<div>
-<script src="js/lib/knockout-3.4.2.js" type="text/javascript"></script>
+</div>
+<script src="js/lib/knockout-3.4.2.js"></script>
 <script src="js/lib/jquery.min.js"></script>
 <script src="js/lib/bootstrap.min.js"></script>
-<script src="js/app.js" type="text/javascript"></script>
+<script src="js/app.js"></script>
+
 <script>
   $("#menu-toggle").click(function(e) {
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
     });
 </script>
-<script
-
-async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2wLLK3vcEY1gdSsAvq2uRK6R-ANAEpUQ&callback=initMap">
-</script>
+<!-- <script
+ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2wLLK3vcEY1gdSsAvq2uRK6R-ANAEpUQ&callback=initMap" async defer onerror="HandleError()">
+</script> -->
 </body>
 </html>
