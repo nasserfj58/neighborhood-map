@@ -1,9 +1,16 @@
-$(document).ready(function(){
+// window.onerror = function(){
+//   var mapdiv = $('#map');
+//   mapdiv.text("");
+//   mapdiv.append('<div style=" margin:50px" class="alert alert-danger" role="alert"><strong>We are sorry!</strong> There is an Error with google map, Try Again Later.</div>');
+// }
+
+$(window).load(function(){
+console.log(document.readyState);
 //handle google maps Error
-function handleError(msg){
+function handleError(){
   var mapdiv = $('#map');
-  mapdiv.text(msg);
-  //mapdiv.append('<div style=" margin:50px" class="alert alert-danger" role="alert"><strong>We are sorry!</strong> There is an Error with google map, Try Again Later.</div>');
+  mapdiv.text("");
+  mapdiv.append('<div style=" margin:50px" class="alert alert-danger" role="alert"><strong>We are sorry!</strong> There is an Error with google map, Try Again Later.</div>');
 }
 
 //hardcoded locations data
@@ -14,6 +21,16 @@ var locations = [
   new Location("King Khalid International Airport",24.959439,46.702620),
   new Location("Masmak Fort",24.631215,46.713380)
 ];
+try {
+  $.getScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyD2wLLK3vcEY1gdSsAvq2uRK6R-ANAEpUQ")
+    .done(function( script, textStatus ) {
+      console.log(textStatus);
+      initMap();
+    });
+
+} catch (e) {
+  handleError(e);
+}
 
 var wantedMarkers = [];
 var markers = [];
@@ -22,11 +39,27 @@ var map;
 
 //this function is calledback when googlemaps is downloaded
 function initMap() {
-        // Create a map object and specify the DOM element for display
+  //window.console&&window.console.error&&window.console.error(a)
+  if(window.console.error){
+  handleError();
+  return;
+}
+        try {
+
+       // Create a map object and specify the DOM element for display
           map = new google.maps.Map(document.getElementById('map'), {
           zoom: 9,
           center: {lat: 24.713552, lng: 46.675296}
         });
+        }
+        catch (e) {
+            handleError();
+       }
+    //    console.log(window.onerror);
+        if(window.console.error()){
+          handleError();
+          return;
+        }
 
         var marker;
         for (var i = 0; i < locations.length; i++) {
@@ -197,14 +230,5 @@ ko.applyBindings(new ViewModel());
                 return markers[i];
           }
    }
-   $.getScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyD2wLLK3vcEY1gdSsAvq2uRK6R-ANAEpU")
-     .done(function( script, textStatus ) {
-       initMap();
-     })
-     .fail(function( jqxhr, settings, exception ) {
-       console.log("not");
-   })
-   .always(function() {
 
-});
 });
