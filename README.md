@@ -11,8 +11,14 @@ google api script (replace "your_key" with your app key).
 7. Enjoy.
 
 ## References:
+- knockoutjs :http://knockoutjs.com/documentation/introduction.html
 - Google maps: https://developers.google.com/maps/documentation/javascript/reference
 - Foursquare api: https://developer.foursquare.com/docs/api/venues/search
 - jquery: http://api.jquery.com/jquery.getjson/
 - Sidebar: https://startbootstrap.com/template.overviews/simple.sidebar/
 - Hamburger Icon: https://www.iconfinder.com/icons/134216/hamburger_lines_menu_icon
+- stckoverflow:
+                - https://stackoverflow.com/questions/6794405/trigger-google-maps-marker-click
+                - https://stackoverflow.com/questions/1789945/how-to-check-whether-a-string-contains-a-substring-in-javascript
+                - https://stackoverflow.com/questions/15114963/changing-data-in-the-info-window-with-google-map-markers
+                - https://stackoverflow.com/questions/22183864/google-maps-infowindow-close-not-working
