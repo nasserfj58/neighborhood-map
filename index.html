@@ -18,41 +18,41 @@
     <!-- Sidebar -->
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
-          <li class="sidebar-brand">
-            <span style="color:white" >Filter Locations</span>
-                <!-- <input type="text" data-bind="textInput: filterInput, event:{ change: changeList}" class="form-control" /> -->
-          </li>
-            <li>
-               <input type="text" data-bind="textInput: filterInput, event:{ change: changeList}" class="form-control" />
-            </li>
-            <div data-bind="foreach: locations" class="col-md-12">
-              <li><a data-bind="text: name ,visible: show, click: $parent.changeMarkers" href="#">
-              </a></li>
-            </div>
+            <li class="sidebar-brand">
+                  <span style="color:white" >Filter Locations</span>
+              </li>
+              <li>
+                  <input type="text" data-bind="textInput: filterInput, event:{ change: changeList}" class="form-control" />
+              </li>
+              <div data-bind="foreach: locations" class="col-md-12">
+                <li><a data-bind="text: name ,visible: show, click: $parent.changeMarkers" href="#">
+                </a></li>
+              </div>
         </ul>
     </div>
     <a href="#menu-toggle" class="btn btn-default" id="menu-toggle"><img height="20px" width="20px" src="if_menu-alt_134216.png"/></a>
     <div id="page-content-wrapper">
-                <div class="container-fluid">
-                    <div class="row">
-    <div id="map" class="col-lg-12">
-    </div>
-  </div>
-</div>
-</div>
+            <div class="container-fluid">
+               <div class="row">
+                  <div id="map" class="col-lg-8">
+                  </div>
+                </div>
+            </div>
+      </div>
 <div>
-  <script src="js/lib/knockout-3.4.2.js" type="text/javascript"></script>
-  <script src="js/lib/jquery.min.js"></script>
-  <script src="js/lib/bootstrap.min.js"></script>
-  <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2wLLK3vcEY1gdSsAvq2uRK6R-ANAEpUQ&callback=initMap">
-  </script>
-  <script src="js/app.js" type="text/javascript"></script>
-  <script>
+<script src="js/lib/knockout-3.4.2.js" type="text/javascript"></script>
+<script src="js/lib/jquery.min.js"></script>
+<script src="js/lib/bootstrap.min.js"></script>
+<script
+async defer src="https://maps.googleapis.com/maps/api/js?key=your_key&callback=initMap">
+</script>
+<script src="js/app.js" type="text/javascript"></script>
+<script>
   $("#menu-toggle").click(function(e) {
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
-    });</script>
+    });
+</script>
 
 </body>
 </html>
