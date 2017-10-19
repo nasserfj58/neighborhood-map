@@ -40,14 +40,14 @@ function initMap() {
             content:""
             });
             google.maps.event.addListener(infowindow,'closeclick',function(){
+              //stop the marker if the info windo closed
               disapleInmation();
-            //removes the marker
-          // then, remove the infowindows name from the array
             });
 
             infowindows.push(infowindow);
             element.addListener('click', function() {
             infowindows.forEach(function(item){
+                //close all infowindows if new marker clicked
               item.close();
             });
             disapleInmation();
@@ -69,6 +69,7 @@ ViewModel=function() {
   };
   self.changeList = function(){
        self.locations().forEach(function(item){
+         //check if thier is location with the same name or the user delete text
       if((item.name.toLocaleLowerCase().includes(self.filterInput().toLocaleLowerCase()))||(self.filterInput()==="")){
         item.show(true);
         wantedMarkers.push(getMarker(item.lat));
@@ -77,6 +78,7 @@ ViewModel=function() {
           item.show(false);
       }
     });
+    // set the shosen markers by the user
     setWantedMarkers();
   };
 };
@@ -111,7 +113,7 @@ ko.applyBindings(new ViewModel());
   // this method will get the data from foursquare api, params for api:lat,lng,clientId
   //clientSecret and v which is the date in (YYYYMMDD) format
   function getLoactionInfo(lat,lng){
-      //4
+
       var clientId= "your_CientID";
       var clientSecret= "your_ClientSecret";
       //foursquare api needs YYYYMMDD as parameter
@@ -175,7 +177,7 @@ ko.applyBindings(new ViewModel());
         //empty the wantedMarkers array, for the next filtering
         wantedMarkers.length=0;
    }
-
+   //check the lat and return marker object
    function getMarker(lat){
         for (var i = 0; i < markers.length; i++) {
              if(markers[i].getPosition().lat() === lat)
