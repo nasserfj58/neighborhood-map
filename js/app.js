@@ -20,6 +20,13 @@ function initMap() {
           zoom: 9,
           center: {lat: 24.713552, lng: 46.675296}
         });
+        
+        //this check if google map write errors to the console
+        if(window.console.count.length>0){
+          handleError();
+          return;
+        }
+
         var marker;
         for (var i = 0; i < locations.length; i++) {
 
@@ -183,4 +190,10 @@ ko.applyBindings(new ViewModel());
              if(markers[i].getPosition().lat() === lat)
                 return markers[i];
           }
+   }
+   //handle google maps Error
+   function handleError(){
+     var mapdiv = $('#map');
+     mapdiv.text("");
+     mapdiv.append('<div style=" margin:50px" class="alert alert-danger" role="alert"><strong>We are sorry!</strong> There is an Error with google map, Try Again Later.</div>');
    }
