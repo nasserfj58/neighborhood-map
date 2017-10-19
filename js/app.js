@@ -114,8 +114,8 @@ ko.applyBindings(new ViewModel());
   //clientSecret and v which is the date in (YYYYMMDD) format
   function getLoactionInfo(lat,lng){
 
-      var clientId= "your_CientID";
-      var clientSecret= "your_ClientSecret";
+    var clientId= "B0HPTMTZVY2KVHBWHY43WLKFUGDZQROSXVSF20SHHCFV01R4";
+    var clientSecret= "N2TZ5PATB4FNEQLMO44JNYBYEKAM3IAPF5OOF0NQ15WUFXJE";
       //foursquare api needs YYYYMMDD as parameter
       var date = new Date();
       var day = date.getDate().toString();
