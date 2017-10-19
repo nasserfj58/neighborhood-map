@@ -18,7 +18,7 @@ google api script (replace "your_key" with your app key).
 - Sidebar: https://startbootstrap.com/template.overviews/simple.sidebar/
 - Hamburger Icon: https://www.iconfinder.com/icons/134216/hamburger_lines_menu_icon
 - stckoverflow:
-                - https://stackoverflow.com/questions/6794405/trigger-google-maps-marker-click
-                - https://stackoverflow.com/questions/1789945/how-to-check-whether-a-string-contains-a-substring-in-javascript
-                - https://stackoverflow.com/questions/15114963/changing-data-in-the-info-window-with-google-map-markers
-                - https://stackoverflow.com/questions/22183864/google-maps-infowindow-close-not-working
+                 https://stackoverflow.com/questions/6794405/trigger-google-maps-marker-click
+                 https://stackoverflow.com/questions/1789945/how-to-check-whether-a-string-contains-a-substring-in-javascript
+                 https://stackoverflow.com/questions/15114963/changing-data-in-the-info-window-with-google-map-markers
+                 https://stackoverflow.com/questions/22183864/google-maps-infowindow-close-not-working
