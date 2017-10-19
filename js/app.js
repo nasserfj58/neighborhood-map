@@ -8,9 +8,9 @@ var locations = [
   new Location("Masmak Fort",24.631215,46.713380)
 ];
 
-var wantedMarkers = new Array();
-var markers = new Array();
-var infowindows = new Array();
+var wantedMarkers = [];
+var markers = [];
+var infowindows = [];
 var map;
 
 //this function is calledback when googlemaps is downloaded
@@ -79,7 +79,7 @@ ViewModel=function() {
     });
     setWantedMarkers();
   };
-}
+};
 
 ko.applyBindings(new ViewModel());
 
@@ -150,7 +150,7 @@ ko.applyBindings(new ViewModel());
       var city = (data.response.venues[0].location.city);
       var category = (data.response.venues[0].categories[0].name);
 
-      var info = "<ul><li><strong>";
+          info = "<ul><li><strong>";
           info += "Name: "+locations[index].name+"</b></li>";
           info += "<li>City: "+city+"</li>";
           info += "<li>Category: "+category+"</li><ul>";
