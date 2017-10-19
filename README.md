@@ -11,8 +11,8 @@ google api script (replace "your_key" with your app key).
 7. Enjoy.
 
 ## References:
-Google maps: https://developers.google.com/maps/documentation/javascript/reference
-Foursquare api: https://developer.foursquare.com/docs/api/venues/search
-jquery: http://api.jquery.com/jquery.getjson/
+- Google maps: https://developers.google.com/maps/documentation/javascript/reference
+- Foursquare api: https://developer.foursquare.com/docs/api/venues/search
+- jquery: http://api.jquery.com/jquery.getjson/
 Sidebar: https://startbootstrap.com/template.overviews/simple.sidebar/
-Hamburger Icon: https://www.iconfinder.com/icons/134216/hamburger_lines_menu_icon
+- Hamburger Icon: https://www.iconfinder.com/icons/134216/hamburger_lines_menu_icon
