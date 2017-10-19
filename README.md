@@ -7,7 +7,7 @@
 4. Open index.html and insert the google api key to
 google api script (replace "your_key" with your app key).
 5. Open neighborhood.map/js/app.js, in  getLoactionInfo() assign your clientid and clientsecret to clientId and clientSecret variables.
-6. Open index.html to your browser.
+6. Open index.html to your browser (you need to press enter after enter the text to filter).
 7. Enjoy.
 
 ## References:
