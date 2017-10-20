@@ -15,7 +15,7 @@ $(window).load(function(){
       }
   )();
 
-  $.getScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyD2wLLK3vcEY1gdSsAvq2uRK6R-ANAEpUQ")
+  $.getScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyD2wLLK3vcEY1gdSsAvq2uRK6R-ANAEpU")
     .done(function( script, textStatus ) {
       initMap();
     });
