@@ -14,7 +14,7 @@ $(window).load(function(){
 
       }
   )();
-  
+
   $.getScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyD2wLLK3vcEY1gdSsAvq2uRK6R-ANAEpUQ")
     .done(function( script, textStatus ) {
       initMap();
@@ -102,7 +102,7 @@ ViewModel=function() {
          //check if thier is location with the same name or the user delete text
       if((item.name.toLocaleLowerCase().includes(self.filterInput().toLocaleLowerCase()))||(self.filterInput()==="")){
         item.show(true);
-        if(! markers[0].getPosition() === 'undefined'){
+        if( markers[0].getPosition() !== 'undefined'){
              wantedMarker = getMarker(item.lat);
 
           wantedMarkers.push(wantedMarker);
@@ -112,7 +112,7 @@ ViewModel=function() {
           item.show(false);
       }
     });
-    if(wantedMarker != null)
+    if(wantedMarker !== null)
     // set the shosen markers by the user
     setWantedMarkers();
   };
