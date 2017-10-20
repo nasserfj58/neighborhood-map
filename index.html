@@ -17,17 +17,17 @@
   <div id="wrapper">
     <!-- Sidebar -->
     <div id="sidebar-wrapper">
-            <li class="sidebar-brand">
-                  <span style="color:white" >Filter Locations</span>
-                  <ul class="sidebar-nav">
-              </li>
-              <li>
+         <ul class="sidebar-nav">
+           <li class="sidebar-brand">
+                 <span style="color:white" >Filter Locations</span>
+           </li>
+            <li>
                   <input type="text" data-bind="textInput: filterInput, event:{ change: changeList}" class="form-control" />
-              </li>
-              <div data-bind="foreach: locations" class="col-md-12">
+            </li>
+             <div data-bind="foreach: locations" class="col-md-12">
                 <li><a data-bind="text: name ,visible: show, click: $parent.changeMarkers" href="#">
                 </a></li>
-              </div>
+             </div>
         </ul>
     </div>
     <a href="#menu-toggle" class="btn btn-default" id="menu-toggle"><img height="20px" width="20px" src="if_menu-alt_134216.png"/></a>

@@ -5,6 +5,69 @@
 // }
 
 $(window).load(function(){
+  (
+      function () {
+          var _error = console.error;
+
+          console.error = function (message) {
+              for (var i = 0; i < _errorListeners.length; i++)
+              {
+                  var listener = _errorListeners[i];
+                  listener.call(this, message);
+              }
+
+              handleError();
+          };
+
+          var _errorListeners = [];
+
+          console.errorListeners = {
+              add: function (listener) {
+                  if (_errorListeners.indexOf(listener) == -1)
+                      _errorListeners.push(listener);
+              },
+
+              remove: function (listener) {
+                  _errorListeners.remove(listener);
+              }
+          };
+      }
+  )();
+
+  // -- SUBSCRIBE TO ALL CONSOLE ERROR MESSAGES --
+  console.errorListeners.add(onConsoleError);
+
+  // -- FIND OUT WHETHER THE ERROR IS GOOGLE MAP API KEY ERROR --
+  function onConsoleError(errorMessage) {
+      var keyWords = ["API", "key", "Google", "Maps"];
+      var isGoogleMapsApiKeyError = false;
+
+      for (var i = 0; i < keyWords.length; i++)
+          if (!errorMessage.contains(keyWords[i], true))
+              return;
+
+      //googleApiKeyErrorHandler(); - here must be call of your function for your own handling api-key-error
+  }
+
+
+  // -- A COUPLE OF EXTENTION HELPERS --
+
+  Array.prototype.remove = function (item, comparer) {
+      if (this.indexOf(item) != -1) {
+          this.splice(startIndex, 1);
+      }
+  };
+
+  String.prototype.contains = function (str, ignoreCase) {
+      if (ignoreCase)
+          return String.prototype.indexOf.call(this.toLowerCase(), str.toLowerCase()) !== -1;
+      else
+          return String.prototype.indexOf.call(this, str) !== -1;
+  };
+  $.getScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyD2wLLK3vcEY1gdSsAvq2uRK6R-ANAEpU")
+    .done(function( script, textStatus ) {
+      initMap();
+    });
 console.log(document.readyState);
 //handle google maps Error
 function handleError(){
@@ -21,16 +84,6 @@ var locations = [
   new Location("King Khalid International Airport",24.959439,46.702620),
   new Location("Masmak Fort",24.631215,46.713380)
 ];
-try {
-  $.getScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyD2wLLK3vcEY1gdSsAvq2uRK6R-ANAEpUQ")
-    .done(function( script, textStatus ) {
-      console.log(textStatus);
-      initMap();
-    });
-
-} catch (e) {
-  handleError(e);
-}
 
 var wantedMarkers = [];
 var markers = [];
@@ -40,26 +93,22 @@ var map;
 //this function is calledback when googlemaps is downloaded
 function initMap() {
   //window.console&&window.console.error&&window.console.error(a)
-  if(window.console.error){
-  handleError();
-  return;
-}
-        try {
+//   if(window.console.error){
+//   handleError();
+//   return;
+// }
 
        // Create a map object and specify the DOM element for display
           map = new google.maps.Map(document.getElementById('map'), {
           zoom: 9,
           center: {lat: 24.713552, lng: 46.675296}
         });
-        }
-        catch (e) {
-            handleError();
-       }
+
     //    console.log(window.onerror);
-        if(window.console.error()){
-          handleError();
-          return;
-        }
+        // if(window.console.error()){
+        //   handleError();
+        //   return;
+        // }
 
         var marker;
         for (var i = 0; i < locations.length; i++) {
@@ -96,14 +145,8 @@ function initMap() {
            infowindow.open(map, element);
           });
     });
-
   }
-  mapError = () => {
-    console.log("what ever");
-    var mapdiv = $('#map');
-    mapdiv.text("you cant");
-    mapdiv.append('<div style=" margin:50px" class="alert alert-danger" role="alert"><strong>We are sorry!</strong> There is an Error with google map, Try Again Later.</div>');
-  };
+
 
 ViewModel=function() {
   var self = this;
@@ -114,16 +157,22 @@ ViewModel=function() {
       new google.maps.event.trigger( getMarker(location.lat), 'click' );
   };
   self.changeList = function(){
+       var wantedMarker=null;
        self.locations().forEach(function(item){
          //check if thier is location with the same name or the user delete text
       if((item.name.toLocaleLowerCase().includes(self.filterInput().toLocaleLowerCase()))||(self.filterInput()==="")){
         item.show(true);
-        wantedMarkers.push(getMarker(item.lat));
+        if(! markers[0].getPosition() === 'undefined'){
+             wantedMarker = getMarker(item.lat);
+
+          wantedMarkers.push(wantedMarker);
+        }
       }
       else {
           item.show(false);
       }
     });
+    if(wantedMarker != null)
     // set the shosen markers by the user
     setWantedMarkers();
   };
@@ -225,10 +274,15 @@ ko.applyBindings(new ViewModel());
    }
    //check the lat and return marker object
    function getMarker(lat){
+      if(typeof markers[0].getPosition() ==='undefined')
+          return null;
+
         for (var i = 0; i < markers.length; i++) {
              if(markers[i].getPosition().lat() === lat)
                 return markers[i];
           }
    }
+
+
 
 });

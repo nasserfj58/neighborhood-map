@@ -22,4 +22,5 @@ google api script (replace "your_key" with your app key).
                  https://stackoverflow.com/questions/1789945/how-to-check-whether-a-string-contains-a-substring-in-javascript
                  https://stackoverflow.com/questions/15114963/changing-data-in-the-info-window-with-google-map-markers
                  https://stackoverflow.com/questions/22183864/google-maps-infowindow-close-not-working
-- Bootstrap Alerts:https://v4-alpha.getbootstrap.com/components/alerts/ 
+- Bootstrap Alerts:https://v4-alpha.getbootstrap.com/components/alerts/
+- Error handling: https://www.linkedin.com/pulse/how-catch-api-key-google-maps-missing-invalid-sergey-fisun
