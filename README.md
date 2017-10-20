@@ -24,3 +24,4 @@ google api script (replace "your_key" with your app key).
                  https://stackoverflow.com/questions/22183864/google-maps-infowindow-close-not-working
 - Bootstrap Alerts:https://v4-alpha.getbootstrap.com/components/alerts/
 - Error handling: https://www.linkedin.com/pulse/how-catch-api-key-google-maps-missing-invalid-sergey-fisun
+                  https://api.jquery.com/jquery.getscript/

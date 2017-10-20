@@ -14,7 +14,7 @@ $(window).load(function(){
 
       }
   )();
-
+  
   $.getScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyD2wLLK3vcEY1gdSsAvq2uRK6R-ANAEpUQ")
     .done(function( script, textStatus ) {
       initMap();
@@ -222,5 +222,5 @@ ko.applyBindings(new ViewModel());
                 return markers[i];
           }
    }
-   
+
 });
