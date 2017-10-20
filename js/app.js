@@ -7,68 +7,19 @@
 $(window).load(function(){
   (
       function () {
-          var _error = console.error;
-
+          //var _error = console.error;
           console.error = function (message) {
-              for (var i = 0; i < _errorListeners.length; i++)
-              {
-                  var listener = _errorListeners[i];
-                  listener.call(this, message);
-              }
-
-              handleError();
+                  handleError();
           };
 
-          var _errorListeners = [];
-
-          console.errorListeners = {
-              add: function (listener) {
-                  if (_errorListeners.indexOf(listener) == -1)
-                      _errorListeners.push(listener);
-              },
-
-              remove: function (listener) {
-                  _errorListeners.remove(listener);
-              }
-          };
       }
   )();
 
-  // -- SUBSCRIBE TO ALL CONSOLE ERROR MESSAGES --
-  console.errorListeners.add(onConsoleError);
-
-  // -- FIND OUT WHETHER THE ERROR IS GOOGLE MAP API KEY ERROR --
-  function onConsoleError(errorMessage) {
-      var keyWords = ["API", "key", "Google", "Maps"];
-      var isGoogleMapsApiKeyError = false;
-
-      for (var i = 0; i < keyWords.length; i++)
-          if (!errorMessage.contains(keyWords[i], true))
-              return;
-
-      //googleApiKeyErrorHandler(); - here must be call of your function for your own handling api-key-error
-  }
-
-
-  // -- A COUPLE OF EXTENTION HELPERS --
-
-  Array.prototype.remove = function (item, comparer) {
-      if (this.indexOf(item) != -1) {
-          this.splice(startIndex, 1);
-      }
-  };
-
-  String.prototype.contains = function (str, ignoreCase) {
-      if (ignoreCase)
-          return String.prototype.indexOf.call(this.toLowerCase(), str.toLowerCase()) !== -1;
-      else
-          return String.prototype.indexOf.call(this, str) !== -1;
-  };
-  $.getScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyD2wLLK3vcEY1gdSsAvq2uRK6R-ANAEpU")
+  $.getScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyD2wLLK3vcEY1gdSsAvq2uRK6R-ANAEpUQ")
     .done(function( script, textStatus ) {
       initMap();
     });
-console.log(document.readyState);
+
 //handle google maps Error
 function handleError(){
   var mapdiv = $('#map');
@@ -92,23 +43,11 @@ var map;
 
 //this function is calledback when googlemaps is downloaded
 function initMap() {
-  //window.console&&window.console.error&&window.console.error(a)
-//   if(window.console.error){
-//   handleError();
-//   return;
-// }
-
        // Create a map object and specify the DOM element for display
           map = new google.maps.Map(document.getElementById('map'), {
           zoom: 9,
           center: {lat: 24.713552, lng: 46.675296}
         });
-
-    //    console.log(window.onerror);
-        // if(window.console.error()){
-        //   handleError();
-        //   return;
-        // }
 
         var marker;
         for (var i = 0; i < locations.length; i++) {
@@ -141,12 +80,13 @@ function initMap() {
             });
             disapleInmation();
             element.setAnimation(google.maps.Animation.BOUNCE);
-                          getLoactionInfo(element.getPosition().lat(),element.getPosition().lng());
+
+            getLoactionInfo(element.getPosition().lat(),element.getPosition().lng());
+
            infowindow.open(map, element);
           });
     });
   }
-
 
 ViewModel=function() {
   var self = this;
@@ -282,7 +222,5 @@ ko.applyBindings(new ViewModel());
                 return markers[i];
           }
    }
-
-
-
+   
 });
