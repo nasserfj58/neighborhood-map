@@ -1,31 +1,9 @@
-// window.onerror = function(){
-//   var mapdiv = $('#map');
-//   mapdiv.text("");
-//   mapdiv.append('<div style=" margin:50px" class="alert alert-danger" role="alert"><strong>We are sorry!</strong> There is an Error with google map, Try Again Later.</div>');
-// }
 
-$(window).load(function(){
-  (
-      function () {
-          //var _error = console.error;
-          console.error = function (message) {
-                  handleError();
-          };
-
-      }
-  )();
-
-  $.getScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyD2wLLK3vcEY1gdSsAvq2uRK6R-ANAEpUQ")
-    .done(function( script, textStatus ) {
-      initMap();
-    });
-
-//handle google maps Error
-function handleError(){
-  var mapdiv = $('#map');
-  mapdiv.text("");
-  mapdiv.append('<div style=" margin:50px" class="alert alert-danger" role="alert"><strong>We are sorry!</strong> There is an Error with google map, Try Again Later.</div>');
-}
+var markers = [];
+var infowindows = [];
+var wantedMarkers = [];
+var map;
+var mapdiv = $('#map');
 
 //hardcoded locations data
 var locations = [
@@ -36,60 +14,23 @@ var locations = [
   new Location("Masmak Fort",24.631215,46.713380)
 ];
 
-var wantedMarkers = [];
-var markers = [];
-var infowindows = [];
-var map;
+  // Create Location object by call new location(name,lat,lng);
+   function Location(name,lat,lng){
+        var self=this;
 
-//this function is calledback when googlemaps is downloaded
-function initMap() {
-       // Create a map object and specify the DOM element for display
-          map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 9,
-          center: {lat: 24.713552, lng: 46.675296}
-        });
-
-        var marker;
-        for (var i = 0; i < locations.length; i++) {
-              var lat= locations[i].lat;
-              var lng= locations[i].lng;
-              var info=locations[i].info;
-
-             marker =  new google.maps.Marker({
-                     position: {lat,lng},
-                     map: map,
-                    animation: google.maps.Animation.DROP
-                  });
-             markers.push(marker);
-        }(marker);
-
-          markers.forEach(function(element) {
-            var infowindow = new google.maps.InfoWindow({
-            content:""
-            });
-            google.maps.event.addListener(infowindow,'closeclick',function(){
-              //stop the marker if the info windo closed
-              disapleInmation();
-            });
-
-            infowindows.push(infowindow);
-            element.addListener('click', function() {
-            infowindows.forEach(function(item){
-                //close all infowindows if new marker clicked
-              item.close();
-            });
-            disapleInmation();
-            element.setAnimation(google.maps.Animation.BOUNCE);
-
-            getLoactionInfo(element.getPosition().lat(),element.getPosition().lng());
-
-           infowindow.open(map, element);
-          });
-    });
+        self.name= name;
+        self.lat = lat;
+        self.lng = lng;
+        self.show= ko.observable(true);
+        self.info="";
   }
 
+//this function is calledback when googlemaps is downloaded
+
 ViewModel=function() {
+
   var self = this;
+
   self.filterInput = ko.observable();
   self.locations = ko.observable(locations);
   self.changeMarkers=function(location){
@@ -102,7 +43,7 @@ ViewModel=function() {
          //check if thier is location with the same name or the user delete text
       if((item.name.toLocaleLowerCase().includes(self.filterInput().toLocaleLowerCase()))||(self.filterInput()==="")){
         item.show(true);
-        if( markers[0].getPosition() !== 'undefined'){
+        if( item !== 'undefined'){
              wantedMarker = getMarker(item.lat);
 
           wantedMarkers.push(wantedMarker);
@@ -112,7 +53,10 @@ ViewModel=function() {
           item.show(false);
       }
     });
-    if(wantedMarker !== null)
+    // in empty input case
+    if(wantedMarkers.length === 0 && self.filterInput() === "" )
+      wantedMarkers = markers;
+
     // set the shosen markers by the user
     setWantedMarkers();
   };
@@ -120,16 +64,6 @@ ViewModel=function() {
 
 ko.applyBindings(new ViewModel());
 
-// Create Location object by call new location(name,lat,lng);
- function Location(name,lat,lng){
-      var self=this;
-
-      self.name= name;
-      self.lat = lat;
-      self.lng = lng;
-      self.show= ko.observable(true);
-      self.info="";
-}
 
 // check lat and return index
   function getLocationIndex(lat){
@@ -138,13 +72,7 @@ ko.applyBindings(new ViewModel());
           return i;
       }
   }
-  // disapleInmation for all markers but the clicked one
-  function disapleInmation(){
-    markers.forEach(function(element){
-      if (element.getAnimation() !== null)
-            element.setAnimation(null);
-    });
-  }
+
   // this method will get the data from foursquare api, params for api:lat,lng,clientId
   //clientSecret and v which is the date in (YYYYMMDD) format
   function getLoactionInfo(lat,lng){
@@ -198,6 +126,7 @@ ko.applyBindings(new ViewModel());
     locations[index].info=info;
     infowindows[index].setContent(locations[index].info);
   }
+
   // Sets the map on all markers but the wanted one
   function setWantedMarkers() {
 
@@ -221,6 +150,78 @@ ko.applyBindings(new ViewModel());
              if(markers[i].getPosition().lat() === lat)
                 return markers[i];
           }
-   }
+}
 
+// disapleInmation for all markers but the clicked one
+function disapleInmation(){
+  markers.forEach(function(element){
+    if (element.getAnimation() !== null)
+          element.setAnimation(null);
+  });
+}
+
+
+function handleError(){
+
+     mapdiv.text("");
+     mapdiv.append('<div style=" margin:50px" class="alert alert-danger" role="alert"><strong>We are sorry!</strong> There is an Error with google map, Try Again Later.</div>');
+}
+
+
+function initMap() {
+
+       // Create a map object and specify the DOM element for display
+          map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 9,
+          center: {lat: 24.713552, lng: 46.675296}
+        });
+
+        setMarkerInfoWindow();
+
+}
+
+function setMarkerInfoWindow(){
+  var marker;
+  for (var i = 0; i < locations.length; i++) {
+      var lat= locations[i].lat;
+      var lng= locations[i].lng;
+      var info=locations[i].info;
+
+     marker =  new google.maps.Marker({
+             position: {lat,lng},
+             map: map,
+            animation: google.maps.Animation.DROP
+          });
+     markers.push(marker);
+}(marker);
+
+  markers.forEach(function(element) {
+    var infowindow = new google.maps.InfoWindow({
+    content:""
+    });
+    google.maps.event.addListener(infowindow,'closeclick',function(){
+      //stop the marker if the info windo closed
+      disapleInmation();
+    });
+
+    infowindows.push(infowindow);
+    element.addListener('click', function() {
+    infowindows.forEach(function(item){
+        //close all infowindows if new marker clicked
+      item.close();
+    });
+    disapleInmation();
+    element.setAnimation(google.maps.Animation.BOUNCE);
+
+    getLoactionInfo(element.getPosition().lat(),element.getPosition().lng());
+
+   infowindow.open(map, element);
+  });
 });
+}
+
+
+$("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+  });

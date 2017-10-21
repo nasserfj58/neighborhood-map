@@ -44,15 +44,9 @@
 <script src="js/lib/jquery.min.js"></script>
 <script src="js/lib/bootstrap.min.js"></script>
 <script src="js/app.js"></script>
-
-<script>
-  $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
+<script
+ async
+ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2wLLK3vcEY1gdSsAvq2uRK6R-ANAEpUQ&callback=initMap"   onerror="handleError()">
 </script>
-<!-- <script
- src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2wLLK3vcEY1gdSsAvq2uRK6R-ANAEpUQ&callback=initMap" async onerror="handleError()">
-</script> -->
 </body>
 </html>
