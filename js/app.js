@@ -42,12 +42,13 @@ ViewModel=function() {
        self.locations().forEach(function(item){
          //check if thier is location with the same name or the user delete text
       if((item.name.toLocaleLowerCase().includes(self.filterInput().toLocaleLowerCase()))||(self.filterInput()==="")){
-        item.show(true);
-        if( item !== 'undefined'){
-             wantedMarker = getMarker(item.lat);
 
-          wantedMarkers.push(wantedMarker);
-        }
+              item.show(true);
+
+              wantedMarker = getMarker(item.lat);
+
+              wantedMarkers.push(wantedMarker);
+
       }
       else {
           item.show(false);
@@ -59,6 +60,7 @@ ViewModel=function() {
 
     // set the shosen markers by the user
     setWantedMarkers();
+
   };
 };
 
@@ -135,6 +137,8 @@ ko.applyBindings(new ViewModel());
           markers[i].setMap(null);
         }
         wantedMarkers.forEach(function(item){
+        if(item === null )
+            return;
         //show the wanted markers in the map
           item.setMap(map);
         });
@@ -143,7 +147,8 @@ ko.applyBindings(new ViewModel());
    }
    //check the lat and return marker object
    function getMarker(lat){
-      if(typeof markers[0].getPosition() ==='undefined')
+     //console.log(markers[0]);
+      if(typeof markers[0] ==='undefined')
           return null;
 
         for (var i = 0; i < markers.length; i++) {
